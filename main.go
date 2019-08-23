@@ -57,13 +57,13 @@ func getAddresses(res http.ResponseWriter, req *http.Request) {
 	res.Header().Set("Access-Control-Allow-Origin", "*")
 	address1, _ := mux.Vars(req)["address1"]
 	address1 = strings.Replace(address1, " ", "+", -1)
-	address1 = fmt.Sprintf("https://maps.googleapis.com/maps/api/place/textsearch/json?query=%s&key=%s", address1, os.Getenv("googleMapsApiKey"))
+	address1 = fmt.Sprintf("https://maps.googleapis.com/maps/api/place/textsearch/json?query=%s&key=%s", address1, os.Getenv("google_maps_api_key"))
 
 	address1Lat, address1Lng := latLngGetter(address1)
 
 	address2, _ := mux.Vars(req)["address2"]
 	address2 = strings.Replace(address2, " ", "+", -1)
-	address2 = fmt.Sprintf("https://maps.googleapis.com/maps/api/place/textsearch/json?query=%s&key=%s", address2, os.Getenv("googleMapsApiKey"))
+	address2 = fmt.Sprintf("https://maps.googleapis.com/maps/api/place/textsearch/json?query=%s&key=%s", address2, os.Getenv("google_maps_api_key"))
 	address2Lat, address2Lng := latLngGetter(address2)
 	if address1Lat == 0 || address1Lng == 0 || address2Lat == 0 || address2Lng == 0 {
 		fmt.Fprint(res, "[]")
@@ -87,7 +87,7 @@ func curLocationStart(res http.ResponseWriter, req *http.Request) {
 
 	address, _ := mux.Vars(req)["address"]
 	address = strings.Replace(address, " ", "+", -1)
-	address = fmt.Sprintf("https://maps.googleapis.com/maps/api/place/textsearch/json?query=%s&key=%s", address, os.Getenv("googleMapsApiKey"))
+	address = fmt.Sprintf("https://maps.googleapis.com/maps/api/place/textsearch/json?query=%s&key=%s", address, os.Getenv("google_maps_api_key"))
 	addressLat, addressLng := latLngGetter(address)
 	if startLat == 0 || startLong == 0 || addressLat == 0 || addressLng == 0 {
 		fmt.Fprint(res, "[]")
