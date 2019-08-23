@@ -79,7 +79,6 @@ func keepLines(s string, n int) string {
 	return strings.Replace(result, "\r", "", -1)
 }
 
-// add data to here
 type Station struct {
 	UsageCost string `json:"UsageCost"`
 	GeneralComments string `json:"GeneralComments"`
@@ -91,9 +90,6 @@ type Station struct {
 		StateOrProvince string  `json:"StateOrProvince"`
 		Town            string  `json:"Town"`
 		AccessComments            string  `json:"AccessComments"`
-		// Connector       string  `json:"Connections[0].ConnectionType.Title"`
-		// Level           string  `json:"Connections[0].Level.Title"`
-		// Quantity     string  `json:"Connections[0].Quantity"`
 	} `json:"AddressInfo"`
 	OperatorInfo struct {
 		Title    string  `json:"Title"`

@@ -1,5 +1,5 @@
 {
-	"ImportPath": "q3Project",
+	"ImportPath": "tripcharge-api",
 	"GoVersion": "go1.7",
 	"GodepVersion": "v75",
 	"Deps": [
