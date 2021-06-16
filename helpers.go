@@ -35,6 +35,7 @@ func urlGetter(url string) []Station {
 		fmt.Println("Bad")
 		panic(err)
 	}
+	fmt.Println(resp)
 
 	jsonDataFromHttp, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
