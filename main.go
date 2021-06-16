@@ -25,7 +25,7 @@ func getLatLong(res http.ResponseWriter, req *http.Request) {
 	startLat := mux.Vars(req)["startLat"]
 	startLong := mux.Vars(req)["startLong"]
 
-	url := fmt.Sprintf("http://api.openchargemap.io/v2/poi/?output=json&distance=100&maxresults=50&latitude=%s&longitude=%s", startLat, startLong)
+	url := fmt.Sprintf("http://api.openchargemap.io/v2/poi/?output=json&distance=100&maxresults=50&latitude=%s&longitude=%s&key=%s", startLat, startLong, os.Getenv("open_charge_api_key"))
 	datas := urlGetter(url)
 	output := StationToJson(datas)
 	res.Header().Set("Content-Type", "application/json")
@@ -42,7 +42,7 @@ func getBetween(res http.ResponseWriter, req *http.Request) {
 	num := getDisanceBetween(startLat, startLong, endLat, endLong)
 	maxStations := getMaxStations(num)
 	fmt.Println(num)
-	url := fmt.Sprintf("http://api.openchargemap.io/v2/poi/?output=json&latitude=%s&longitude=%s&distance=%s&&maxresults=%s", toString(startLat), toString(startLong), toString(num), maxStations)
+	url := fmt.Sprintf("http://api.openchargemap.io/v2/poi/?output=json&latitude=%s&longitude=%s&distance=%s&&maxresults=%s&key=%s", toString(startLat), toString(startLong), toString(num), maxStations, os.Getenv("open_charge_api_key"))
 	datas := urlGetter(url)
 	allBetween := getStationsBetween(startLat, startLong, endLat, endLong, datas, num)
 	output := StationToJsonWStartEnd(allBetween, startLat, startLong, endLat, endLong)
@@ -71,7 +71,7 @@ func getAddresses(res http.ResponseWriter, req *http.Request) {
 		num := getDisanceBetween(address1Lat, address1Lng, address2Lat, address2Lng)
 		maxStations := getMaxStations(num)
 
-		url := fmt.Sprintf("http://api.openchargemap.io/v2/poi/?output=json&latitude=%s&longitude=%s&distance=%s&&maxresults=%s", toString(address1Lat), toString(address1Lng), toString(num), maxStations)
+		url := fmt.Sprintf("http://api.openchargemap.io/v2/poi/?output=json&latitude=%s&longitude=%s&distance=%s&&maxresults=%s&key=%s", toString(address1Lat), toString(address1Lng), toString(num), maxStations, os.Getenv("open_charge_api_key"))
 		datas := urlGetter(url)
 		allBetween := getStationsBetween(address1Lat, address1Lng, address2Lat, address2Lng, datas, num)
 		output := StationToJsonWStartEnd(allBetween, address1Lat, address1Lng, address2Lat, address2Lng)
@@ -95,7 +95,7 @@ func curLocationStart(res http.ResponseWriter, req *http.Request) {
 		num := getDisanceBetween(startLat, startLong, addressLat, addressLng)
 		maxStations := getMaxStations(num)
 
-		url := fmt.Sprintf("http://api.openchargemap.io/v2/poi/?output=json&latitude=%s&longitude=%s&distance=%s&&maxresults=%s", toString(startLat), toString(startLong), toString(num), maxStations)
+		url := fmt.Sprintf("http://api.openchargemap.io/v2/poi/?output=json&latitude=%s&longitude=%s&distance=%s&&maxresults=%s&key=%s", toString(startLat), toString(startLong), toString(num), maxStations, os.Getenv("open_charge_api_key"))
 		datas := urlGetter(url)
 		allBetween := getStationsBetween(startLat, startLong, addressLat, addressLng, datas, num)
 		output := StationToJsonWStartEnd(allBetween, startLat, startLong, addressLat, addressLng)
