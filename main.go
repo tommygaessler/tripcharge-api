@@ -2,23 +2,31 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 	"strconv"
 	"strings"
 
+	"github.com/aws/aws-lambda-go/lambda"
+	"github.com/awslabs/aws-lambda-go-api-proxy/gorillamux"
 	"github.com/gorilla/mux"
 )
 
-func main() {
+var muxLambda *gorillamux.GorillaMuxAdapter
+
+func init() {
 	router := mux.NewRouter().StrictSlash(true)
+
 	router.HandleFunc("/lat/{startLat}/long/{startLong}", getLatLong).Methods("GET")
 	router.HandleFunc("/start/lat/{startLat}/long/{startLong}/end/lat/{endLat}/long/{endLong}", getBetween).Methods("GET")
 	router.HandleFunc("/start/address/{address1}/end/address/{address2}", getAddresses).Methods("GET")
 	router.HandleFunc("/start/lat/{startLat}/long/{startLong}/end/address/{address}", curLocationStart).Methods("GET")
 
-	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), router))
+	muxLambda = gorillamux.New(router)
+}
+
+func main() {
+	lambda.Start(muxLambda.Proxy)
 }
 
 func getLatLong(res http.ResponseWriter, req *http.Request) {

@@ -1,0 +1,21 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Resources:
+  ChargingApi:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: provided.al2
+      Handler: bootstrap
+      Timeout: 30
+      MemorySize: 512
+      Environment:
+        Variables:
+          open_charge_api_key: YOUR_KEY
+          google_maps_api_key: YOUR_KEY
+      Events:
+        Api:
+          Type: HttpApi
+          Properties:
+            Path: /{proxy+}
+            Method: ANY
